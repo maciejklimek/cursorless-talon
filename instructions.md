@@ -1,4 +1,4 @@
-# Instructions
+# Cursorless - Instructions
 
 ## Marks
 
@@ -52,9 +52,21 @@ Selects both the token containing letter 'a' with a blue hat AND the token conta
 `take that`  
 Select the token containing the last mentioned marker.
 
+### Subword
+Narrow marker to subword in a camelCase/kebab-case/snake_case.
+
+* second word
+* second through fourth word
+* last word
+
+#### eg:
+`take second through fourth word blue air`  
+Selects the second, third and fourth subword in the token containing letter 'a' with a blue hat.
+
+
 ## Transformations
 Expand the marker to the containing scope.
-6
+
 * arg
 * arrow
 * call
@@ -75,17 +87,6 @@ Expand the marker to the containing scope.
 #### eg:
 `take function blue air`  
 Selects the function including the token containing letter 'a' with a blue hat. 
-
-### Subword
-Narrow marker to subword in a camelCase/kebab-case/snake_case.
-
-* second word
-* second through fourth word
-* last word
-
-#### eg:
-`take second through fourth word blue air`  
-Selects the second, third and fourth subword in the token containing letter 'a' with a blue hat.
 
 ## Actions
 Perform actions on the token containing the marker.
