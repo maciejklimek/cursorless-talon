@@ -38,8 +38,8 @@ See also the [full docs](index.md) for more information.
 ### Primitive targets
 #### Marks
 ##### Decorated symbol
-* take air
-* take blue air
+* `"take air"`
+* `"take blue air"`
 
 ###### Colors
 * gray: default (optional: eg "take gray air" can be shortened to "take air")
