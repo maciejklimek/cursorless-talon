@@ -109,6 +109,7 @@ Note that these all work with multiple cursors
 * take after [blue] air past before [blue] bat
 * take past end of line
 * take past start of line
+* take [blue] air past end of line (but see https://github.com/pokey/cursorless-vscode/issues/4)
 
 #### List targets
 * take [blue] air and [green] bat
