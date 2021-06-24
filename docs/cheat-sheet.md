@@ -1,7 +1,9 @@
 # Cursorless: Cheat sheet
 See also the [full docs](index.md) for more information.
 
+## Table of contents
 - [Cursorless: Cheat sheet](#cursorless-cheat-sheet)
+  - [Table of contents](#table-of-contents)
   - [Targets](#targets)
     - [Primitive targets](#primitive-targets)
       - [Marks](#marks)
