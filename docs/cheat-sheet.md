@@ -96,9 +96,8 @@ Note that these all work with multiple cursors
 * take lines in funk [blue] air
 
 ##### File
-* copy file
-* pre file
-* copy file [blue] air (if [blue] air is in another split)
+* take file
+* take file [blue] air (if [blue] air is in another split)
 
 ### Compound targets
 #### Range targets
