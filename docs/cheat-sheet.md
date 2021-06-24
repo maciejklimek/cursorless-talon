@@ -1,6 +1,37 @@
 # Cursorless: Cheat sheet
 See also the [full docs](index.md) for more information.
 
+- [Cursorless: Cheat sheet](#cursorless-cheat-sheet)
+  - [Targets](#targets)
+    - [Primitive targets](#primitive-targets)
+      - [Marks](#marks)
+        - [Decorated symbol](#decorated-symbol)
+          - [Colors](#colors)
+        - [Last mark](#last-mark)
+        - [Cursor](#cursor)
+      - [Transformations](#transformations)
+        - [Syntactic scopes](#syntactic-scopes)
+        - [Scopes with siblings](#scopes-with-siblings)
+        - [Subword](#subword)
+        - [Lines](#lines)
+        - [File](#file)
+  - [Compound targets](#compound-targets)
+    - [Range targets](#range-targets)
+    - [List targets](#list-targets)
+  - [Actions](#actions)
+    - [Move cursor](#move-cursor)
+    - [Selection](#selection)
+    - [Delete](#delete)
+    - [Cut / Copy](#cut--copy)
+    - [Swap](#swap)
+    - [Insert empty lines](#insert-empty-lines)
+    - [Rename](#rename)
+    - [Insert/Use/Repeat](#insertuserepeat)
+    - [Wrap](#wrap)
+    - [Show definition/reference/quick fix](#show-definitionreferencequick-fix)
+    - [Fold/unfold](#foldunfold)
+    - [Extract](#extract)
+
 ## Targets
 ### Primitive targets
 #### Marks
