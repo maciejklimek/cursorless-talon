@@ -92,7 +92,7 @@ Note that these all work with multiple cursors
 
 ##### Lines
 * `"take line [blue] air"`
-* `"take line [blue] air past [blue] bat"` (second "line" is implied)
+* `"take line [blue] air past [blue] bat"` (second `"line"` is implied)
 * `"take lines in funk [blue] air"`
 
 ##### File
