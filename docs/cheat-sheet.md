@@ -1,37 +1,33 @@
-
 # Cursorless: Cheat sheet
+## Targets
+### Primitive targets
+#### Marks
+##### Decorated symbol
+* take air
+* take blue air
 
-## Marks
-
-### Colors
-* gray: default
+###### Colors
+* gray: default (optional: eg "take gray air" can be shortened to "take air")
 * blue: blue
 * green: green
 * rose: red
 * squash: yellow
 * plum: mauve
 
-### Ranged marks
-* take past [blue] air
-* take [blue] air past [green] bat
-* take past before [blue] air
-* take past end of line
-* take past start of line
-
-### Multiple marks
-* take [blue] air and [green] bat
-* take every key [blue] air
-
-### Last mark
+##### Last mark
 * take that
 * post that
 
-### Subword
-* take second subword [blue] air
-* take second through fourth subword [blue] air
-* take last subword [blue] air
+##### Cursor
+Note that these all work with multiple cursors
 
-## Transformations
+* chuck this
+* chuck this funk
+* chuck funk ("this" is implied as the mark when omitted)
+* pre funk
+
+#### Transformations
+##### Syntactic scopes
 * take arg [blue] air
 * take arrow [blue] air
 * take call [blue] air
@@ -48,6 +44,40 @@
 * take state [blue] air
 * take string [blue] air
 * take value [blue] air
+
+##### Scopes with siblings
+* take every key [blue] air
+* take every funk [blue] air
+* etc
+
+##### Subword
+* take second word [blue] air
+* take second through fourth word [blue] air
+* take last word [blue] air
+
+##### Lines
+* take line [blue] air
+* take line [blue] air past [blue] bat (second "line" is implied)
+* take lines in funk [blue] air
+
+##### File
+* copy file
+* pre file
+* copy file [blue] air (if [blue] air is in another split)
+
+## Compound targets
+### Range targets
+* take [blue] air past [green] bat
+* take past [blue] air
+* take past before [blue] air
+* take after [blue] air past before [blue] bat
+* take past end of line
+* take past start of line
+
+### List targets
+* take [blue] air and [green] bat
+* take funk [blue] air and [green] bat (note second target inherits "funk")
+* take funk [blue] air and token [green] bat
 
 ## Actions
 
@@ -69,6 +99,8 @@
 ### Swap
 * swap with [blue] air
 * swap [blue] air with [green] bat
+* swap funk [blue] air with [green] bat ("funk" is implied for second target)
+* swap funk [blue] air with token [green] bat
 
 ### Insert empty lines
 * drink [blue] air
@@ -91,7 +123,7 @@
 * escaped quad wrap [blue] air
 * escaped twin wrap [blue] air
 * puff [blue] air
-* wrap [blue] with funk FUNCTION_NAME
+* wrap [blue] air with funk FUNCTION_NAME
 
 ### Show definition/reference/quick fix
 * def show [blue] air

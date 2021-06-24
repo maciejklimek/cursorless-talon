@@ -2,7 +2,7 @@
 
 ## Marks
 
-### Simple marks
+### Decorated symbols
 [color] (letter | symbol | number)
 
 * `air`
@@ -14,8 +14,8 @@
 `take blue air`  
 Selects the token containing letter 'a' with a blue hat.
 
-### Colors
-Gray is optional `gray air` and `air` is equal
+#### Colors
+Gray is optional: `gray air` and `air` are equivalent
 
 |Command|Visible color|
 ---|---

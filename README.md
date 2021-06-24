@@ -2,9 +2,9 @@
 
 This repository contains the talon side of [Cursorless](https://marketplace.visualstudio.com/items?itemName=pokey.cursorless).  
 
-## Command instructions
-[Instructions](instructions.md)  
-[Cheat sheet](cheat_sheet.md)
+## Documentation
+Full documentation can be found [here](docs/index.md), as well as a more terse
+[cheat sheet](docs/cheat-sheet.md) for reference.
 
 ## Installation
 First, install the dependencies:
