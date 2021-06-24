@@ -1,5 +1,8 @@
 # Cursorless - Instructions
 
+See also the [cheat sheet](cheat-sheet.md) for a terse reference once you
+understand the concepts.
+
 ## Marks
 
 ### Decorated symbols

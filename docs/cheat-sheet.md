@@ -1,4 +1,6 @@
 # Cursorless: Cheat sheet
+See also the [full docs](index.md) for more information.
+
 ## Targets
 ### Primitive targets
 #### Marks
