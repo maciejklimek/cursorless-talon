@@ -15,9 +15,9 @@ See also the [full docs](index.md) for more information.
         - [Subword](#subword)
         - [Lines](#lines)
         - [File](#file)
-  - [Compound targets](#compound-targets)
-    - [Range targets](#range-targets)
-    - [List targets](#list-targets)
+    - [Compound targets](#compound-targets)
+      - [Range targets](#range-targets)
+      - [List targets](#list-targets)
   - [Actions](#actions)
     - [Move cursor](#move-cursor)
     - [Selection](#selection)
@@ -98,8 +98,8 @@ Note that these all work with multiple cursors
 * pre file
 * copy file [blue] air (if [blue] air is in another split)
 
-## Compound targets
-### Range targets
+### Compound targets
+#### Range targets
 * take [blue] air past [green] bat
 * take past [blue] air
 * take past before [blue] air
@@ -107,7 +107,7 @@ Note that these all work with multiple cursors
 * take past end of line
 * take past start of line
 
-### List targets
+#### List targets
 * take [blue] air and [green] bat
 * take funk [blue] air and [green] bat (note second target inherits "funk")
 * take funk [blue] air and token [green] bat
