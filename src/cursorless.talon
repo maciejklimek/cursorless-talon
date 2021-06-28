@@ -62,3 +62,6 @@ rename <user.cursorless_target>:
     user.cursorless_single_target_command("setSelection", cursorless_target)
     user.vscode("editor.action.rename")
     sleep(100ms)
+
+# cheat sheet: user.cheat_sheet_toggle()
+test: user.cheat_sheet_toggle()
