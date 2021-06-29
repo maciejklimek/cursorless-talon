@@ -11,8 +11,6 @@ padding = 4
 def on_draw(canvas):
     paint = canvas.paint
 
-    # ['FILL', 'STROKE', 'STROKE_AND_FILL',
-    # paint.color = "ffffffaa"
     draw_background(canvas)
 
     y = canvas.y + line_height / 2
@@ -34,10 +32,15 @@ def on_draw(canvas):
 
 
 def draw_background(canvas):
-    canvas.paint.style = canvas.paint.Style.FILL
-    canvas.paint.color = "ffffff"
+    # paint.color = "ffffffaa"
     radius = 10
     rrect = skia.RoundRect.from_rect(canvas.rect, x=radius, y=radius)
+    canvas.paint.style = canvas.paint.Style.FILL
+    canvas.paint.color = "ffffff"
+    canvas.draw_rrect(rrect)
+
+    canvas.paint.style = canvas.paint.Style.STROKE
+    canvas.paint.color = "000000"
     canvas.draw_rrect(rrect)
 
 
@@ -52,6 +55,7 @@ def column(canvas, x, y, w):
 def draw_header(canvas, x, y, w, text):
     canvas.paint.color = "000000"
     canvas.paint.textsize = text_size
+    canvas.paint.style = canvas.paint.Style.FILL
     canvas.paint.font.embolden = True
     rect = canvas.paint.measure_text(text)[1]
     draw_text(canvas, text, x, y)
@@ -60,6 +64,7 @@ def draw_header(canvas, x, y, w, text):
 
 def draw_items(canvas, x, y, w, items):
     canvas.paint.textsize = text_size
+    canvas.paint.style = canvas.paint.Style.FILL
     canvas.paint.font.embolden = False
     if isinstance(items, dict):
         return draw_dict(canvas, x, y, w, items)
