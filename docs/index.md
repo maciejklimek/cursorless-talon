@@ -1,106 +1,123 @@
 # Cursorless - Instructions
-See also the [cheat sheet](cheat-sheet.md) for a terse reference once you understand the concepts.
+You may find it helpful to start with the [tutorial video](https://www.youtube.com/watch?v=JxcNW0hnfTk).
+
+See also the [cheat sheet](cheat-sheet.md) for a more compact reference once you understand the concepts.
 
 ## Table of contents
-  - [Targets](#targets)
-    - [Primitive targets](#primitive-targets)
-      - [Marks](#marks)
-        - [Decorated symbol](#decorated-symbol)
-          - [Colors](#colors)
-        - [Last mark](#last-mark)
-        - [Cursor](#cursor)
-      - [Transformations](#transformations)
-        - [Syntactic scopes](#syntactic-scopes)
-        - [Scopes with siblings](#scopes-with-siblings)
-        - [Subword](#subword)
-        - [Lines](#lines)
-        - [File](#file)
-    - [Compound targets](#compound-targets)
-      - [Range targets](#range-targets)
-      - [List targets](#list-targets)
-  - [Actions](#actions)
-    - [Move cursor](#move-cursor)
-    - [Selection](#selection)
-    - [Delete](#delete)
-    - [Cut / Copy](#cut--copy)
-    - [Swap](#swap)
-    - [Insert empty lines](#insert-empty-lines)
-    - [Rename](#rename)
-    - [Insert/Use/Repeat](#insertuserepeat)
-    - [Wrap](#wrap)
-    - [Show definition/reference/quick fix](#show-definitionreferencequick-fix)
-    - [Fold/unfold](#foldunfold)
-    - [Extract](#extract)
+- [Table of contents](#table-of-contents)
+- [Overview](#overview)
+- [Targets](#targets)
+  - [Primitive targets](#primitive-targets)
+    - [Marks](#marks)
+      - [Decorated symbol](#decorated-symbol)
+        - [Colors](#colors)
+      - [`"this"`](#this)
+      - [`"that"`](#that)
+    - [Transformations](#transformations)
+      - [Syntactic scopes](#syntactic-scopes)
+      - [Syntactic scopes with siblings](#syntactic-scopes-with-siblings)
+      - [Subword](#subword)
+      - [Lines](#lines)
+      - [File](#file)
+  - [Compound targets](#compound-targets)
+    - [Range targets](#range-targets)
+    - [List targets](#list-targets)
+- [Actions](#actions)
+  - [Move cursor](#move-cursor)
+  - [Selection](#selection)
+  - [Delete](#delete)
+  - [Cut / copy](#cut--copy)
+  - [Swap](#swap)
+  - [Insert empty lines](#insert-empty-lines)
+  - [Rename](#rename)
+  - [Insert/Use/Repeat](#insertuserepeat)
+  - [Wrap](#wrap)
+  - [Show definition/reference/quick fix](#show-definitionreferencequick-fix)
+  - [Fold/unfold](#foldunfold)
+  - [Extract](#extract)
+  
+
+## Overview
+Every cursorless command consists of an action performed on a target. For example, the command `"chuck blue air"` deletes the token with a blue hat over the `"a"`. In this command, the action is `"chuck"` (delete), and the target is `"blue air"`.
 
 ## Targets
+There are two types of targets: primitive targets and compound targets. Compound targets are constructed from primitive targets, so let's begin with primitive targets.
 
 ### Primitive targets
+A primitive target consists of a mark and an optional transformation. The simplest primitive targets just consist of a mark, so let's begin with those
+
 #### Marks
+There are several types of marks:
+
 ##### Decorated symbol
-[color] (letter | symbol | number)
+This is the first type of mark you'll notice when you start using cursorless. We can refer to any token on the screen by the hat that is over a particular character within that token:
 
-* `air`
-* `blue air`
-* `blue dash`
-* `blue five`
+* `"air"` (if the color is gray)
+* `"blue bat"`
+* `"blue dash"`
+* `"blue five"`
 
-eg:  
-`take blue air`  
-Selects the token containing letter 'a' with a blue hat.
+The general form of this type of mark is:
+
+`"[<color>] (<letter> | <symbol> | <number>)"`
+
+Combining this with an action, we might say `"take blue air"` to select the token containing letter `'a'` with a blue hat over it.
 
 ###### Colors
-Gray is optional: `gray air` and `air` are equivalent
+The following colors are supported. As mentioned above, note that gray is optional: `"gray air"` and `"air"` are equivalent
 
 |Command|Visible color|
 ---|---
-|`gray`|default|
-|`blue`|blue|
-|`bgreen`|green|
-|`rose`|red|
-|`squash`|yellow|
-|`plum`|mauve|
+|`"gray"`|default|
+|`"blue"`|blue|
+|`"green"`|green|
+|`"rose"`|red|
+|`"squash"`|yellow|
+|`"plum"`|mauve|
 
-##### Last mark
-* that
 
-eg:  
-`take that`  
-Select the token containing the last mentioned marker.
-
-##### Cursor
-Is no mark is given the current cursor/cursors is used as the taget
+##### `"this"`
+The word `"this"` can be used as a mark to refer to the current cursor(s) or selection(s). Note that when combined with a transformation, the `"this"` mark can be omitted, and it will be implied.
 
 * `chuck this`
 * `take this funk`
 * `pre funk`
 * `chuck line`
 
+##### `"that"`
+The word that can be used as a mark to refer to the target of the previous cursorless command.
+
+* `"pre that"`
+* `"round wrap that"`
+
 #### Transformations
-Expand the marker to the containing scope.
+Transformations can be applied to any mark to modify its extent. This is commonly used to refer to larger syntactic elements within a source code document. 
+
+Note that if the mark is `"this"`, you have multiple cursors, the transformation will be applied to each cursor individually.
 
 ##### Syntactic scopes
-* arg
-* arrow
-* call
-* class
-* comment
-* element
-* funk
-* if
-* key
-* lambda
-* list
-* map
-* pair
-* state
-* string
-* value
+|Term|Syntactic element|
+---|---
+ `"arg"` | function parameter or function call argument
+ `"arrow"` | anonymous lambda function
+ `"call"` | function call, eg `foo(1, 2)`
+ `"class"` | class definition
+ `"comment"` | comment
+ `"element"` | list element
+ `"funk"` | function definition
+ `"if"` | if statement
+ `"key"` | key in a map / object
+ `"lambda"` | equivalent to `"arrow"`
+ `"list"` | list
+ `"map"` | map / object
+ `"pair"` | an entry in a map / object
+ `"state"` | a statement, eg `let foo;`
+ `"string"` | string
+ `"value"` | a value in a map / object
 
-eg:  
-`take function blue air`  
-Selects the function including the token containing letter 'a' with a blue hat. 
+For example, `"take funk blue air"` selects the function containing the token with a blue hat over the letter `'a'`. 
 
-##### Scopes with siblings
+##### Syntactic scopes with siblings
 * every
 
 eg:  
