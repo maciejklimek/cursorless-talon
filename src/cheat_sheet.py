@@ -1,7 +1,9 @@
-from talon import Module, ui, registry, skia
+from talon import Module, ui, registry, skia, actions
 from talon.canvas import Canvas
+import re
 
 mod = Module()
+mod.mode("cursorless_cheat_sheet", "Mode for showing cursorless cheat sheet gui")
 cheat_sheet = None
 
 line_height = 34
@@ -14,10 +16,10 @@ class CheatSheet:
         # canvas = Canvas.from_screen(screen)
         screen = ui.main_screen()
         self.canvas = Canvas(
-            screen.width * 0.2,
-            screen.height * 0.2,
-            screen.width * 0.6,
-            screen.height * 0.6,
+            screen.width * 0.05,
+            screen.height * 0.05,
+            screen.width * 0.9,
+            screen.height * 0.9,
         )
         self.canvas.register("draw", self.draw)
         self.canvas.freeze()
@@ -27,25 +29,63 @@ class CheatSheet:
         self.canvas = None
 
     def draw(self, canvas):
+        self.x = canvas.x + line_height
+
         self.draw_background(canvas)
         self.draw_title(canvas)
+        self.draw_legend(canvas)
 
-        self.x = canvas.x + line_height
         self.y = get_y(canvas)
         self.w = 0
 
         self.draw_header(canvas, "Actions")
         self.draw_items(canvas, get_list("simple_cursorless_action"))
 
-        self.next_column(canvas)
-
-        self.draw_header(canvas, "Actions")
-        self.draw_items(canvas, get_list("simple_cursorless_action").keys())
-
-        self.next_column(canvas)
-
+        self.next_row()
         self.draw_header(canvas, "Colors")
         self.draw_items(canvas, get_list("symbol_color"))
+
+        self.next_column(canvas)
+
+        self.draw_header(canvas, "Sub types")
+        self.draw_items(canvas, get_list("cursorless_sub_component_type"))
+
+        self.next_row()
+        self.draw_header(canvas, "Positions")
+        self.draw_items(canvas, get_list("cursorless_position").keys())
+
+        self.next_column(canvas)
+
+        self.draw_header(canvas, "Swap")
+        self.draw_items(canvas, {
+            "swap T with T": "Swaps both Ts",
+            "swap with T": "Swap S with T"
+        })
+
+        self.next_row()
+        self.draw_header(canvas, "Bring")
+        self.draw_items(canvas, {
+            "bring T to T": "Replace T_2 with T_1",
+            "bring T": "Replace S with T"
+        })
+
+        self.next_row()
+        self.draw_header(canvas, "Compound targets")
+        self.draw_items(canvas, {
+            "T and T": "Ts",
+            "T past T": "Ts and between",
+            "past T": "S, T and between"
+        })
+
+        self.next_column(canvas)
+
+        self.draw_header(canvas, "Transformations")
+        self.draw_items(canvas, get_list("containing_scope_type").keys())
+
+        self.next_column(canvas)
+
+        self.draw_header(canvas, "Marks")
+        self.draw_items(canvas, get_list("cursorless_mark").keys())
 
     def draw_background(self, canvas):
         # paint.color = "ffffffaa"
@@ -59,16 +99,22 @@ class CheatSheet:
         canvas.paint.color = "000000"
         canvas.draw_rrect(rrect)
 
-    def draw_title(self, canvas):
-        self.x = canvas.x + line_height
+    def draw_title(self, canvas):        
         self.y = canvas.y + line_height / 2
         self.w = 0
         self.draw_header(canvas, "Cursorless cheat sheet")
+    
+    def draw_legend(self, canvas):
+        self.y = canvas.y + canvas.height - line_height
+        self.draw_value(canvas, "S = selection    T = target")
 
     def next_column(self, canvas):
         self.x = self.x + self.w + 2 * line_height
         self.y = get_y(canvas)
         self.w = 0
+
+    def next_row(self):
+        self.y += line_height
 
     def draw_header(self, canvas, text):
         canvas.paint.color = "000000"
@@ -138,20 +184,32 @@ class CheatSheet:
 
 @mod.action_class
 class Actions:
-    def cheat_sheet_toggle():
-        """Toggle cheat sheet"""
+    def cursorless_cheat_sheet_toggle():
+        """Toggle cursorless cheat sheet"""
         global cheat_sheet
         if cheat_sheet:
+            actions.mode.disable("user.cursorless_cheat_sheet")
             cheat_sheet.close()
             cheat_sheet = None
         else:
             cheat_sheet = CheatSheet()
+            actions.mode.enable("user.cursorless_cheat_sheet")
 
 def get_list(name):
-    return registry.lists[f"user.{name}"][0]
+    items = registry.lists[f"user.{name}"][0].copy()
+    if isinstance(items, dict):
+        make_dict_readable(items)
+    return items
 
 def get_y(canvas):
     return canvas.y + 1.5 * line_height
 
 def draw_text(canvas, text, x, y):
     canvas.draw_text(text, x, y + text_size + padding / 2)
+
+def make_dict_readable(dict):
+    for k in dict:
+        dict[k] = make_readable(dict[k])
+
+def make_readable(text):
+    return re.sub(r"(?<=[a-z])(?=[A-Z])", " ", text).lower().capitalize()
