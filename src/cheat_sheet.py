@@ -22,7 +22,11 @@ class CheatSheet:
             screen.height * 0.9,
         )
         self.canvas.register("draw", self.draw)
+        self.canvas.register("mouse", mouse)
         self.canvas.freeze()
+
+    def mouse(self, e):
+        print(e)
 
     def close(self):
         self.canvas.close()
@@ -65,15 +69,15 @@ class CheatSheet:
         self.next_row()
         self.draw_header(canvas, "Bring")
         self.draw_items(canvas, {
-            "bring T to T": "Replace T_2 with T_1",
+            "bring T to T": "Replace T2 with T1",
             "bring T": "Replace S with T"
         })
 
         self.next_row()
         self.draw_header(canvas, "Compound targets")
         self.draw_items(canvas, {
-            "T and T": "Ts",
-            "T past T": "Ts and between",
+            "T and T": "T1 and T2",
+            "T past T": "T1, T2 and between",
             "past T": "S, T and between"
         })
 
