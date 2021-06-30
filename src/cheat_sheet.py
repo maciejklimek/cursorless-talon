@@ -8,12 +8,12 @@ cheat_sheet = None
 
 line_height = 34
 text_size = 16
+close_size = 24
 padding = 4
 
 
 class CheatSheet:
     def __init__(self):
-        # canvas = Canvas.from_screen(screen)
         screen = ui.main_screen()
         self.canvas = Canvas(
             screen.width * 0.05,
@@ -21,12 +21,17 @@ class CheatSheet:
             screen.width * 0.9,
             screen.height * 0.9,
         )
+        self.canvas.blocks_mouse = True
         self.canvas.register("draw", self.draw)
-        self.canvas.register("mouse", mouse)
+        self.canvas.register("mouse", self.mouse)
         self.canvas.freeze()
 
     def mouse(self, e):
-        print(e)
+        if e.event == "mouseup" and e.button == 0:
+            rect = get_close_rect(self.canvas.rect)
+            if (in_range(e.gpos.x, rect.x, rect.x + rect.width)
+                and in_range(e.gpos.y, rect.y, rect.y + rect.height)):
+                actions.user.cursorless_cheat_sheet_toggle()
 
     def close(self):
         self.canvas.close()
@@ -38,6 +43,7 @@ class CheatSheet:
         self.draw_background(canvas)
         self.draw_title(canvas)
         self.draw_legend(canvas)
+        self.draw_close(canvas)
 
         self.y = get_y(canvas)
         self.w = 0
@@ -107,10 +113,16 @@ class CheatSheet:
         self.y = canvas.y + line_height / 2
         self.w = 0
         self.draw_header(canvas, "Cursorless cheat sheet")
-    
+
     def draw_legend(self, canvas):
         self.y = canvas.y + canvas.height - line_height
         self.draw_value(canvas, "S = selection    T = target")
+
+    def draw_close(self, canvas):
+        canvas.paint.textsize = close_size
+        rect = get_close_rect(canvas)
+        padding = close_size * 0.375
+        canvas.draw_text("X", rect.x + padding, rect.y + rect.height - padding)
 
     def next_column(self, canvas):
         self.x = self.x + self.w + 2 * line_height
@@ -217,3 +229,15 @@ def make_dict_readable(dict):
 
 def make_readable(text):
     return re.sub(r"(?<=[a-z])(?=[A-Z])", " ", text).lower().capitalize()
+
+def get_close_rect(canvas):
+    wh = 1.5 * close_size
+    return ui.Rect(
+        canvas.x + canvas.width - wh,
+        canvas.y,
+        wh,
+        wh
+    )
+
+def in_range(value, min, max):
+    return value >= min and value <= max
