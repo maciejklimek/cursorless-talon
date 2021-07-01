@@ -5,6 +5,7 @@ import re
 mod = Module()
 mod.mode("cursorless_cheat_sheet", "Mode for showing cursorless cheat sheet gui")
 cheat_sheet = None
+last_mouse_pos = None
 
 line_height = 34
 text_size = 16
@@ -19,23 +20,36 @@ class CheatSheet:
             screen.width * 0.05,
             screen.height * 0.05,
             screen.width * 0.9,
-            screen.height * 0.9,
+            screen.height * 0.9
         )
         self.canvas.blocks_mouse = True
         self.canvas.register("draw", self.draw)
         self.canvas.register("mouse", self.mouse)
         self.canvas.freeze()
 
+    def close(self):
+        self.canvas.unregister("draw", self.draw)
+        self.canvas.unregister("mouse", self.mouse)
+        self.canvas.close()
+
     def mouse(self, e):
-        if e.event == "mouseup" and e.button == 0:
+        global in_drag, last_mouse_pos
+        if e.event == "mousedown" and e.button == 0:
+            last_mouse_pos = e.gpos
+        elif e.event == "mousemove" and last_mouse_pos:
+            diff_x = e.gpos.x - last_mouse_pos.x
+            diff_y = e.gpos.y - last_mouse_pos.y
+            last_mouse_pos = e.gpos
+            self.canvas.move(
+                self.canvas.rect.x + diff_x,
+                self.canvas.rect.y + diff_y
+            )
+        elif e.event == "mouseup" and e.button == 0:
+            last_mouse_pos = None
             rect = get_close_rect(self.canvas.rect)
             if (in_range(e.gpos.x, rect.x, rect.x + rect.width)
                 and in_range(e.gpos.y, rect.y, rect.y + rect.height)):
                 actions.user.cursorless_cheat_sheet_toggle()
-
-    def close(self):
-        self.canvas.close()
-        self.canvas = None
 
     def draw(self, canvas):
         self.x = canvas.x + line_height
@@ -98,7 +112,6 @@ class CheatSheet:
         self.draw_items(canvas, get_list("cursorless_mark").keys())
 
     def draw_background(self, canvas):
-        # paint.color = "ffffffaa"
         radius = 10
         rrect = skia.RoundRect.from_rect(canvas.rect, x=radius, y=radius)
         canvas.paint.style = canvas.paint.Style.FILL
