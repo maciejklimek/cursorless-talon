@@ -9,7 +9,7 @@ mod = Module()
     rule=(
         "<user.cursorless_primitive_target> | "
         "past <user.cursorless_primitive_target> | "
-        "[range] <user.cursorless_primitive_target> past <user.cursorless_primitive_target>"
+        "<user.cursorless_primitive_target> past <user.cursorless_primitive_target>"
     )
 )
 def cursorless_range(m) -> str:

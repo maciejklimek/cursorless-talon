@@ -17,7 +17,7 @@ ctx.lists["self.symbol_color"] = {
     "green": "green",
     "rose": "red",
     "squash": "yellow",
-    "plum": "mauve",
+    "plum": "purple",
 }
 
 
@@ -155,7 +155,6 @@ cursor_mark = {"mark": {"type": "cursor"}}
 that_mark = {"mark": {"type": "that"}}
 
 marks = {
-    # "here": cursor_mark,  # Removed because conflicts with "air"
     "this": cursor_mark,
     **{
         f"this {selection_type.singular}": {**selection_type.json_repr, **cursor_mark}
@@ -165,7 +164,6 @@ marks = {
         f"these {selection_type.plural}": {**selection_type.json_repr, **cursor_mark}
         for selection_type in SELECTION_TYPES
     },
-    "there": that_mark,
     "that": that_mark,
     "last cursor": {"mark": {"type": "lastCursorPosition"}},
     **{
@@ -247,18 +245,8 @@ def decorated_symbol(m) -> str:
 
 mod.list("cursorless_sub_component_type", desc="Supported subcomponent types")
 ctx.lists["self.cursorless_sub_component_type"] = {
-    "small": "subtoken",
-    "subtoken": "subtoken",
-    "subtokens": "subtoken",
-    "subword": "subtoken",
-    "subwords": "subtoken",
     "word": "subtoken",
-    "car": "character",
-    "cars": "character",
-    "character": "character",
-    "characters": "character",
-    "letter": "character",
-    "letters": "character",
+    "char": "character"
 }
 
 
@@ -291,11 +279,11 @@ def cursorless_subcomponent(m) -> str:
 
 pair_symbols = {
     "angle": "angleBrackets",
-    "curly": "curlyBrackets",
     "diamond": "angleBrackets",
-    "quad": "doubleQuotes",
+    "curly": "curlyBrackets",
     "round": "parentheses",
     "square": "squareBrackets",
+    "quad": "doubleQuotes",
     "twin": "singleQuotes",
 }
 

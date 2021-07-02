@@ -48,9 +48,9 @@ ctx.lists["self.simple_cursorless_action"] = {
     # "ref show": "showReferences",
     # "def show": "showDefinition",
     # "hover show": "showHover",
-    # "act up": "scrollToTop",
-    # "act eat": "scrollToMid",
-    # "act down": "scrollToBottom",
+    "top": "scrollToTop",
+    "center": "scrollToCenter",
+    "bottom": "scrollToBottom",
     # "breakpoint": "addBreakPoint",
     # # Accepts position
     # "paste": "paste",
@@ -99,10 +99,6 @@ def cursorless_use(m) -> str:
 
 
 {
-    # Require 1 extent of any kind and 1 position, but prob best to assume
-    # the position is same type as extent, and need to explicitly say "token"
-    # if you want to use a token for the second one if the first is not
-    "use": "use",
     # Require 1 extent of any kind, and 1 format string (eg "camel foo bar",
     # "phrase hello world" etc, "spell air bat cap")
     # Note: these should actually be of the form "replace <range> with"
