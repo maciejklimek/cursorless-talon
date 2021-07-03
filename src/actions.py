@@ -81,7 +81,7 @@ def cursorless_swap(m) -> str:
     target_list = m.cursorless_target_list
 
     if len(target_list) == 1:
-        target_list = [json.dumps(BASE_TARGET)] + target_list
+        target_list = [BASE_TARGET] + target_list
 
     return target_list
 
@@ -91,7 +91,7 @@ def cursorless_use(m) -> str:
     target_list = m.cursorless_target_list
 
     if len(target_list) == 1:
-        target_list = target_list + [json.dumps(STRICT_HERE)]
+        target_list = target_list + [STRICT_HERE]
 
     return target_list
 

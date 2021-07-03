@@ -1,0 +1,54 @@
+from talon import Context, Module
+from dataclasses import dataclass
+
+mod = Module()
+ctx = Context()
+
+ctx.matches = r"""
+app: vscode
+"""
+
+SELECTION_TYPE_KEY = "selectionType"
+
+
+@dataclass
+class SelectionType:
+    singular: str
+    plural: str
+    json_name: str
+    rank: int
+
+    @property
+    def json_repr(self):
+        return {SELECTION_TYPE_KEY: self.json_name}
+
+
+TOKEN = SelectionType("token", "tokens", "token", 0)
+LINE = SelectionType("line", "lines", "line", 1)
+BLOCK = SelectionType("block", "blocks", "block", 2)
+FILE = SelectionType("file", "files", "document", 3)
+
+SELECTION_TYPES = [
+    TOKEN,
+    LINE,
+    BLOCK,
+    FILE,
+]
+
+ranked_selection_types = {
+    selection_type.json_name: selection_type.rank for selection_type in SELECTION_TYPES
+}
+
+
+selection_type_map = {}
+
+for selection_type in SELECTION_TYPES:
+    selection_type_map[selection_type.singular] = selection_type.json_repr
+    # selection_type_map[selection_type.plural] = selection_type.json_repr
+
+mod.list("cursorless_selection_type", desc="Types of selection_types")
+ctx.lists["self.cursorless_selection_type"] = selection_type_map.keys()
+
+@mod.capture(rule="{user.cursorless_selection_type}")
+def cursorless_selection_type(m) -> str:
+    return selection_type_map[m.cursorless_selection_type]
