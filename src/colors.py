@@ -7,9 +7,9 @@ ctx.matches = r"""
 app: vscode
 """
 
-mod.list("symbol_color", desc="Supported symbol colors for token jumping")
+mod.list("cursorless_symbol_color", desc="Supported symbol colors for token jumping")
 
-ctx.lists["self.symbol_color"] = {
+ctx.lists["self.cursorless_symbol_color"] = {
     "gray": "default",
     "blue": "blue",
     "green": "green",

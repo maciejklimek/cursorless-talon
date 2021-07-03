@@ -36,8 +36,8 @@ optional_parameters = " ".join(f"[{p}]" for p in parameters)
 
 marks = "|".join([
     *parameters,
-    "<user.decorated_symbol>", # blue air
-    "<user.cursorless_mark>"  # this, that
+    "<user.cursorless_decorated_symbol>",   # blue air
+    "<user.cursorless_mark>"                # this, that
 ])
 
 

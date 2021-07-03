@@ -7,11 +7,11 @@ ctx.matches = r"""
 app: vscode
 """
 
-@mod.capture(rule="[{user.symbol_color}] <user.any_alphanumeric_key>")
-def decorated_symbol(m) -> str:
+@mod.capture(rule="[{user.cursorless_symbol_color}] <user.any_alphanumeric_key>")
+def cursorless_decorated_symbol(m) -> str:
     """A decorated symbol"""
     try:
-        symbol_color = m.symbol_color
+        symbol_color = m.cursorless_symbol_color
     except AttributeError:
         symbol_color = "default"
 

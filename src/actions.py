@@ -10,8 +10,8 @@ app: vscode
 
 # TODO A lot of these could be supported by supporting a proper "pop back"
 # Would basically use the same logic that is used for updating token ranges
-mod.list("simple_cursorless_action", desc="Supported actions for cursorless navigation")
-ctx.lists["self.simple_cursorless_action"] = {
+mod.list("cursorless_simple_action", desc="Supported actions for cursorless navigation")
+ctx.lists["self.cursorless_simple_action"] = {
     # Accepts any single extent
     # "spring": "setSelection",  # Removed because conflicts with "bring"
     "take": "setSelection",
