@@ -22,10 +22,8 @@ ctx.lists["self.pair_symbol"] = pair_symbols
 
 
 pair_surround_types = {
-    "outer": {"insideOutsideType": "outside"},
-    "outside": {"insideOutsideType": "outside"},
     "inner": {"insideOutsideType": "inside"},
-    "inside": {"insideOutsideType": "inside"},
+    "outer": {"insideOutsideType": "outside"}
 }
 
 mod.list("cursorless_pair_surround_type", desc="Supported pair surround types")
@@ -42,7 +40,7 @@ def cursorless_surrounding_pair(m) -> str:
     return {
         "transformation": {
             "type": "surroundingPair",
-            "delimiter": m.pair_symbol,
-        }
-        **m.cursorless_pair_surround_type,
+            "delimiter": m.pair_symbol
+        },
+        **m.cursorless_pair_surround_type
     }

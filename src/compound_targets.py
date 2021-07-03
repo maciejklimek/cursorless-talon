@@ -1,4 +1,3 @@
-import json
 from .primitive_target import BASE_TARGET
 from talon import Module
 

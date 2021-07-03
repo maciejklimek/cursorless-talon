@@ -11,7 +11,7 @@ app: vscode
 @mod.capture(
     rule=(
         "<user.cursorless_surrounding_pair> |"
-        "{user.cursorless_simple_transformations} |"
+        "<user.cursorless_simple_transformations> |"
         "<user.cursorless_containing_scope>"
     )
 )

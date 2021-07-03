@@ -8,14 +8,12 @@ ctx.matches = r"""
 app: vscode
 """
 
-simple_transformations = [
-    matching_transformation
-]
+simple_transformations = {
+    matching_transformation.term: matching_transformation.info
+}
 
 mod.list("cursorless_simple_transformations", desc="simple transformations")
-ctx.lists["self.cursorless_simple_transformations"] = {
-    transformation.term for transformation in simple_transformations
-}
+ctx.lists["self.cursorless_simple_transformations"] = simple_transformations.keys()
 
 @mod.capture(rule="{user.cursorless_simple_transformations}")
 def cursorless_simple_transformations(m) -> str:

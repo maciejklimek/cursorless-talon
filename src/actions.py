@@ -1,4 +1,3 @@
-import json
 from .primitive_target import BASE_TARGET, STRICT_HERE
 from talon import Context, actions, ui, Module, app, clip
 
