@@ -7,10 +7,9 @@ ctx.matches = r"""
 app: vscode
 """
 
-MARK_THIS = {"mark": {"type": "cursor"}}
 
 marks = {
-    "this": MARK_THIS,
+    "this": {"mark": {"type": "cursor"}},
     "that": {"mark": {"type": "that"}}
 
     # "last cursor": {"mark": {"type": "lastCursorPosition"}} # Not implemented

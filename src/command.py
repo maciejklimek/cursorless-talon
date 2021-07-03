@@ -44,7 +44,6 @@ class Actions:
     ):
         """Execute multi-target cursorless command"""
         args = list(filter(lambda x: x is not NotSet, [arg1, arg2, arg3]))
-        print(targets)
         actions.user.vscode_with_plugin_and_wait(
             "cursorless.command",
             action,

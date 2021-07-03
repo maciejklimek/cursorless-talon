@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from talon import Context, Module
-from .mark import MARK_THIS
 from .selection_type import SELECTION_TYPE_KEY, RANKED_SELECTION_TYPES
 
 ctx = Context()
@@ -22,7 +21,7 @@ STRICT_HERE = {
 
 
 parameters = [
-    "<user.cursorless_position>",             # before, above, end ofb
+    "<user.cursorless_position>",             # before, above, end of
     "<user.cursorless_selection_type>",       # token, line, file
     "<user.cursorless_containing_scope>",     # funk, state, class
     "<user.cursorless_subcomponent>"          # first past second word

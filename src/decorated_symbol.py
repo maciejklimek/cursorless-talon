@@ -15,7 +15,7 @@ ctx.lists["self.cursorless_symbol_color"] = {
     "green": "green",
     "rose": "red",
     "squash": "yellow",
-    "plum": "purple",
+    "plum": "purple"
 }
 
 
