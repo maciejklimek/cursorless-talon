@@ -11,8 +11,9 @@ MARK_THIS = {"mark": {"type": "cursor"}}
 
 marks = {
     "this": MARK_THIS,
-    "that": {"mark": {"type": "that"}},
-    "last cursor": {"mark": {"type": "lastCursorPosition"}},
+    "that": {"mark": {"type": "that"}}
+
+    # "last cursor": {"mark": {"type": "lastCursorPosition"}} # Not implemented
 }
 
 mod.list("cursorless_mark", desc="Types of marks")
