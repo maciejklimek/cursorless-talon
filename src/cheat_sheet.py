@@ -1,6 +1,7 @@
 from talon import Module, ui, registry, skia, actions
 from talon.canvas import Canvas
 import re
+import webbrowser
 
 mod = Module()
 mod.mode("cursorless_cheat_sheet", "Mode for showing cursorless cheat sheet gui")
@@ -223,6 +224,10 @@ class Actions:
         else:
             cheat_sheet = CheatSheet()
             actions.mode.enable("user.cursorless_cheat_sheet")
+
+    def cursorless_open_instructions():
+        """Open web page with cursorless instructions"""
+        webbrowser.open("https://github.com/pokey/cursorless-talon/tree/master/docs")
 
 def get_list(name):
     items = registry.lists[f"user.{name}"][0].copy()
