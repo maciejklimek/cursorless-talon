@@ -44,7 +44,7 @@ def cursorless_containing_scope_type(m) -> str:
     return containing_scope_types[m.cursorless_containing_scope_type]
 
 
-@mod.capture(rule=("[every] <user.cursorless_containing_scope_type> [containing]"))
+@mod.capture(rule=("[every] <user.cursorless_containing_scope_type>"))
 def cursorless_containing_scope(m) -> str:
     """Supported extents for cursorless navigation"""
     if m[0] in ["every"]:

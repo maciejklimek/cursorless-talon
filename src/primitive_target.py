@@ -22,7 +22,7 @@ STRICT_HERE = {
 
 
 parameters = [
-    "<user.cursorless_position>",             # before, above
+    "<user.cursorless_position>",             # before, above, end ofb
     "<user.cursorless_selection_type>",       # token, line, file
     "<user.cursorless_containing_scope>",     # funk, state, class
     "<user.cursorless_subcomponent>"          # first past second word
