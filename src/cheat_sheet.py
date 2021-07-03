@@ -12,6 +12,7 @@ line_height = 34
 text_size = 16
 close_size = 24
 padding = 4
+instructions_url = "https://github.com/pokey/cursorless-talon/tree/master/docs"
 
 
 class CheatSheet:
@@ -47,10 +48,11 @@ class CheatSheet:
             )
         elif e.event == "mouseup" and e.button == 0:
             last_mouse_pos = None
-            rect = get_close_rect(self.canvas.rect)
-            if (in_range(e.gpos.x, rect.x, rect.x + rect.width)
-                and in_range(e.gpos.y, rect.y, rect.y + rect.height)):
+            if is_in_rect(self.canvas, e.gpos, get_close_rect(self.canvas)):
                 actions.user.cursorless_cheat_sheet_toggle()
+            elif is_in_rect(self.canvas, e.gpos, self.url_rect):
+                actions.user.cursorless_cheat_sheet_toggle()
+                actions.user.cursorless_open_instructions()
 
     def draw(self, canvas):
         self.x = canvas.x + line_height
@@ -59,6 +61,7 @@ class CheatSheet:
         self.draw_title(canvas)
         self.draw_legend(canvas)
         self.draw_close(canvas)
+        self.draw_url(canvas)
 
         self.y = get_y(canvas)
         self.w = 0
@@ -110,7 +113,7 @@ class CheatSheet:
         self.next_column(canvas)
 
         self.draw_header(canvas, "Marks")
-        self.draw_items(canvas, get_list("cursorless_mark").keys())
+        # self.draw_items(canvas, get_list("cursorless_mark").keys()e)
 
     def draw_background(self, canvas):
         radius = 10
@@ -137,6 +140,14 @@ class CheatSheet:
         rect = get_close_rect(canvas)
         padding = close_size * 0.375
         canvas.draw_text("X", rect.x + padding, rect.y + rect.height - padding)
+
+    def draw_url(self, canvas):
+        rect = get_url_rect(canvas)
+        self.url_rect = rect
+        canvas.paint.color = "6495ED"
+        canvas.paint.textsize = text_size
+        canvas.paint.style = canvas.paint.Style.FILL
+        draw_text(canvas, instructions_url, rect.x + line_height / 2, rect.y + padding)
 
     def next_column(self, canvas):
         self.x = self.x + self.w + 2 * line_height
@@ -227,7 +238,7 @@ class Actions:
 
     def cursorless_open_instructions():
         """Open web page with cursorless instructions"""
-        webbrowser.open("https://github.com/pokey/cursorless-talon/tree/master/docs")
+        webbrowser.open(instructions_url)
 
 def get_list(name):
     items = registry.lists[f"user.{name}"][0].copy()
@@ -250,12 +261,29 @@ def make_readable(text):
 
 def get_close_rect(canvas):
     wh = 1.5 * close_size
+    cr = canvas.rect
     return ui.Rect(
-        canvas.x + canvas.width - wh,
-        canvas.y,
+        cr.x + cr.width - wh,
+        cr.y,
         wh,
         wh
     )
 
+def get_url_rect(canvas):
+    canvas.paint.textsize = text_size
+    rect = canvas.paint.measure_text(instructions_url)[1]
+    wh = rect.width + line_height
+    cr = canvas.rect
+    return ui.Rect(
+        cr.x + cr.width - wh,
+        cr.y  + cr.height - line_height,
+        wh,
+        line_height
+    )
+
 def in_range(value, min, max):
     return value >= min and value <= max
+
+def is_in_rect(canvas, mouse_pos, rect):
+    return (in_range(mouse_pos.x, rect.x, rect.x + rect.width)
+        and in_range(mouse_pos.y, rect.y, rect.y + rect.height))
